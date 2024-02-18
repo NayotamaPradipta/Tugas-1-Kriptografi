@@ -13,3 +13,52 @@
  *= require_tree .
  *= require_self
  */
+
+.title {
+    text-align: center;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1vw;
+}
+
+.plain-text {
+    width: 50vw;
+    resize: vertical;
+    min-height: 6vw;
+}
+
+.key-text {
+    width: 50vw;
+    resize: vertical;
+    min-height: 1.5vw;
+}
+
+.label-container {
+    width: 8vw;
+}
+
+.input-container {
+    margin-left: 5vw;
+}
+
+.buttons-container {
+    justify-content: space-between;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+button {
+    padding: 1vw 2vw;
+    cursor: pointer;
+}

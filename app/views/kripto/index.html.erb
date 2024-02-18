@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html> 
+    
+    <h1 class="title">Cipher Encryption/Decryption</h1>
+
+    <div class="form-wrapper">
+        <%= form_with url: '/', method: 'post', local: true do |form| %>
+            <div class="field-container">
+                <div class="label-container">
+                <%= label_tag :input_type, 'Input Type:' %>
+                </div>
+                <div class="input-container">
+                <%= select_tag :input_type, options_for_select([['Text', 'text'], ['File', 'file']], selected: 'text'), id: 'input_text_select' %>
+                </div>
+            </div>
+
+            <div class="field-container" id="dynamic_field_container">
+                <div class="label-container">
+                    <%= label_tag :text, 'Input Text:' %>
+                </div>
+                <div class="input-container">
+                    <%= text_area_tag :text, nil, class: 'plain-text', id: 'text_input' %>
+                </div>
+            </div>
+
+            <div class="field-container">
+                <div class="label-container">
+                <%= label_tag :cipher, 'Cipher:' %>
+                </div>
+                <div class="input-container">
+                <%= select_tag :cipher, options_for_select([['Vigenere Cipher', 'vigenere1'], 
+                                                            ['Auto-Key Vigenere Cipher', 'vigenere2'], 
+                                                            ['Extended Vigenere Cipher', 'vigenere3'],
+                                                            ['Playfair Cipher', 'playfair'],
+                                                            ['Affine Cipher', 'affine'],
+                                                            ['Hill Cipher', 'hill'],
+                                                            ['Super Encryption', 'super']
+                                                            ]) %>
+                </div>
+            </div>
+
+            <div class="field-container">
+                <div class="label-container">
+                <%= label_tag :key, 'Key:' %>
+                </div>
+                <div class="input-container">
+                <%= text_area_tag :key, nil, class: 'key-text' %>
+                </div>
+            </div>
+
+            <div class="field-container buttons-container">
+                <%= button_tag(name: 'button_pressed', value: 'encrypt', type: 'submit') do %>
+                    Encrypt
+                <% end %>
+                <div class="spacer"></div>
+                <%= button_tag(name: 'button_pressed', value: 'decrypt', type: 'submit') do %>
+                    Decrypt
+                <% end %>
+            </div>
+
+        <% end %>
+    </div>
+</html>
