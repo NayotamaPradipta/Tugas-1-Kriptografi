@@ -50,6 +50,16 @@
     margin-left: 5vw;
 }
 
+.output-container {
+    margin-left: 5vw;
+}
+
+.result-text {
+    width: 50vw;
+    resize: vertical;
+    min-height: 6vw;
+}
+
 .buttons-container {
     justify-content: space-between;
 }
@@ -62,3 +72,4 @@ button {
     padding: 1vw 2vw;
     cursor: pointer;
 }
+
