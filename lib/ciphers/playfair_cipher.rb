@@ -6,7 +6,7 @@ module Ciphers
             # Matrix key 5x5
             m_key = transform_key(key)
             # Convert text to bigram
-            b_text = transform_text(text)
+            b_text = transform_plain_text(text)
 
             b_text.each do |bigram|
                 idx_1 = get_char_index(m_key, bigram[0])
@@ -28,8 +28,32 @@ module Ciphers
         end
 
         def self.decrypt(text, key)
-            "Playfair"
-            # TODO: Add Playfair cipher decryption
+            plain_text = ""
+            # Matrix key 5x5
+            m_key = transform_key(key)
+            # Convert cipher text to bigram
+            b_text = transform_cipher_text(text)
+            b_text.each do |bigram|
+                idx_1 = get_char_index(m_key, bigram[0])
+                idx_2 = get_char_index(m_key, bigram[1])
+                # Same row
+                if idx_1[0] == idx_2[0]
+                    plain_text << m_key[idx_1[0], (idx_1[1]-1)%5]
+                    plain_text << m_key[idx_2[0], (idx_2[1]-1)%5]
+                # Same column 
+                elsif idx_1[1] == idx_2[1]
+                    plain_text << m_key[(idx_1[0]-1) % 5, idx_1[1]]
+                    plain_text << m_key[(idx_2[0]-1) % 5, idx_2[1]]
+                else 
+                    plain_text << m_key[idx_1[0], idx_2[1]]
+                    plain_text << m_key[idx_2[0], idx_1[1]]
+                end 
+            end
+            # Delete X at the end
+            plain_text.chomp!('X')
+            # Delete X that are flanked by identical letters
+            plain_text.gsub!(/([A-Z])X\1/, '\1\1')
+            plain_text
         end
 
         def self.transform_key(key)
@@ -51,7 +75,9 @@ module Ciphers
             m_key
         end
 
-        def self.transform_text(text)
+        def self.transform_plain_text(text)
+            # Remove non-alphabetical characters
+            text = text.gsub(/[^a-zA-Z]/, '')
             # Delete all space
             text = text.delete(' ')
             # Change to uppercase
@@ -74,6 +100,20 @@ module Ciphers
                     end
                     index+=2
                 end
+            end
+            bigrams
+        end
+
+        def self.transform_cipher_text(text)
+            # Delete all space
+            text = text.delete(' ')
+            # Change to uppercase
+            text = text.upcase 
+            bigrams = []
+            index = 0
+            while index < text.length
+                bigrams << text[index, 2]
+                index += 2
             end
             bigrams
         end
