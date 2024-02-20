@@ -6,6 +6,7 @@
     <div class="form-wrapper">
         <%= form_with url: process_kripto_path, method: 'post', local: true, data: {turbo: false} do |form| %>
             <%= hidden_field_tag :text_cache, params[:text], id: 'text_cache' %>
+            <%= hidden_field_tag :key_cache, params[:key],  id: 'key_cache' %>
             <div class="field-container">
                 <div class="label-container">
                 <%= label_tag :input_type, 'Input Type:' %>
@@ -14,8 +15,8 @@
                 <%= select_tag :input_type, options_for_select([['Text', 'text'], ['File', 'file']], selected: params[:input_type]), id: 'input_text_select' %>
                 </div>
             </div>
-
-            <div class="field-container" id="dynamic_field_container">
+            
+            <div class="field-container" id="dynamic_input_text_container">
                 <div class="label-container">
                     <%= label_tag :text, 'Input Text:' %>
                 </div>
@@ -36,19 +37,19 @@
                                                             ['Affine Cipher', 'affine'],
                                                             ['Hill Cipher', 'hill'],
                                                             ['Super Encryption', 'super']
-                                                            ], selected: params[:cipher]) %>
+                                                            ], selected: params[:cipher]), id: 'input_key_select' %>
                 </div>
             </div>
-
-            <div class="field-container">
-                <div class="label-container">
-                <%= label_tag :key, 'Key:' %>
-                </div>
-                <div class="input-container">
-                <%= text_area_tag :key, params[:key], class: 'key-text' %>
+            <div id="dynamic_key_container">
+                <div class="field-container">
+                    <div class="label-container">
+                    <%= label_tag :key, 'Key:' %>
+                    </div>
+                    <div class="input-container">
+                    <%= text_area_tag :key, params[:key], class: 'key-text', id: 'key_input' %>
+                    </div>
                 </div>
             </div>
-
             <div class="field-container buttons-container">
                 <%= button_tag(name: 'button_pressed', value: 'encrypt', type: 'submit') do %>
                     Encrypt

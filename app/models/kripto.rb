@@ -1,5 +1,5 @@
 class Kripto
-    def self.encrypt(text, cipher, key)
+    def self.encrypt(text, cipher, key, m, b)
         case cipher
         when 'vigenere1'
             # Ciphers::VigenereCipher.encrypt(text, key)
@@ -10,7 +10,7 @@ class Kripto
         when 'playfair'
             Ciphers::PlayfairCipher.encrypt(text, key)
         when 'affine'
-            Ciphers::AffineCipher.encrypt(text, key)
+            Ciphers::AffineCipher.encrypt(text, m, b)
         when 'hill'
             Ciphers::HillCipher.encrypt(text, key)
         when 'super' 
@@ -20,7 +20,7 @@ class Kripto
         end 
     end 
 
-    def self.decrypt(text, cipher, key)
+    def self.decrypt(text, cipher, key, m, b)
         case cipher
         when 'vigenere1'
             # Ciphers::VigenereCipher.decrypt(text, key)
@@ -31,7 +31,7 @@ class Kripto
         when 'playfair'
             Ciphers::PlayfairCipher.decrypt(text, key)
         when 'affine'
-            Ciphers::AffineCipher.decrypt(text, key)
+            Ciphers::AffineCipher.decrypt(text, m, b)
         when 'hill'
             Ciphers::HillCipher.decrypt(text, key)
         when 'super' 

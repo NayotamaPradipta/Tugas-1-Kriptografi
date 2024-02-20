@@ -1,4 +1,5 @@
 require 'matrix'
+require 'base64'
 module Ciphers 
     class PlayfairCipher
         def self.encrypt(text, key)
@@ -28,6 +29,9 @@ module Ciphers
         end
 
         def self.decrypt(text, key)
+            if text.length % 2 != 0
+                return "Illegal text length (Odd)"
+            end
             plain_text = ""
             # Matrix key 5x5
             m_key = transform_key(key)
