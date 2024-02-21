@@ -2,7 +2,7 @@ class Kripto
     def self.encrypt(text, cipher, key, m, b)
         case cipher
         when 'vigenere1'
-            # Ciphers::VigenereCipher.encrypt(text, key)
+            Ciphers::VigenereCipher.encrypt(text, key)
         when 'vigenere2'
             # Ciphers::AutoKeyVigenereCipher.encrypt(text, key)
         when 'vigenere3'
@@ -23,7 +23,7 @@ class Kripto
     def self.decrypt(text, cipher, key, m, b)
         case cipher
         when 'vigenere1'
-            # Ciphers::VigenereCipher.decrypt(text, key)
+            Ciphers::VigenereCipher.decrypt(text, key)
         when 'vigenere2'
             # Ciphers::AutoKeyVigenereCipher.decrypt(text, key)
         when 'vigenere3'
