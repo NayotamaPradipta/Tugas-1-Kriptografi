@@ -6,8 +6,7 @@ module Ciphers
             n = n.to_i
             k_matrix = k_matrix(n, key)
             if is_invertible?(k_matrix)
-                t_matrix = transform_plain_text(text, n)
-                t_matrix_tranposed = t_matrix.transpose
+                t_matrix = transform_text(text, n)
                 cipher_text = ""
                 t_matrix.row_count.times do |row_index|
                     column_vector = Matrix.column_vector(t_matrix.row(row_index).to_a)
@@ -24,8 +23,28 @@ module Ciphers
         end
 
         def self.decrypt(text, n, key)
-            "Hill"
-            # TODO: Add Hill cipher decryption
+            n = n.to_i
+            k_matrix = k_matrix(n, key)
+            if is_invertible?(k_matrix)
+                # Inverse mod matrix
+                det = k_matrix.determinant % 26
+                det_inv = mod_inverse(det, 26)
+                k_inverse = k_matrix.adjugate.map{ |e| (e * det_inv) % 26}
+                
+                c_matrix = transform_text(text, n)
+                plain_text = ""
+                c_matrix.row_count.times do |row_index|
+                    column_vector = Matrix.column_vector(c_matrix.row(row_index).to_a)
+                    m_matrix = k_inverse * column_vector
+                    m_matrix = m_matrix.map{|e| e % 26 }
+                    m_matrix.each do |element|
+                        plain_text += (element + 'A'.ord).chr 
+                    end 
+                end 
+                plain_text
+            else 
+                "Matrix is not invertible (D = 0)"
+            end 
         end
 
         def self.k_matrix(n, key)
@@ -49,7 +68,7 @@ module Ciphers
             k_matrix
         end
 
-        def self.transform_plain_text(text, n)
+        def self.transform_text(text, n)
             text_chars = text.gsub(/[^a-zA-Z]/, '').upcase.chars.map{|c| c.ord - 'A'.ord }
             padded_chunks = text_chars.each_slice(n).map do |slice|
                 slice.length == n ? slice : slice.fill(23, slice.length...n)
@@ -62,6 +81,21 @@ module Ciphers
             matrix.determinant != 0
         rescue Exception => e 
             false 
+        end 
+
+        def self.mod_inverse(a, m)
+            g, x, y = extended_gcd(a, m)
+            if g != 1
+                "Modular inverse does not exist"
+            else 
+                x % m 
+            end 
+        end 
+
+        def self.extended_gcd(a, b)
+            return [b, 0, 1] if a % b == 0
+            g, x, y = extended_gcd(b, a % b)
+            [g, y, x-y*(a/b)]
         end 
     end 
 end 
