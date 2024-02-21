@@ -6,7 +6,7 @@ class Kripto
         when 'vigenere2'
             Ciphers::VigenereAutoKeyCipher.encrypt(text, key)
         when 'vigenere3'
-            # Ciphers::ExtendedVigenereCipher.encrypt(text, key)
+            Ciphers::VigenereExtendedCipher.encrypt(text, key)
         when 'playfair'
             Ciphers::PlayfairCipher.encrypt(text, key)
         when 'affine'
@@ -27,7 +27,7 @@ class Kripto
         when 'vigenere2'
             Ciphers::VigenereAutoKeyCipher.decrypt(text, key)
         when 'vigenere3'
-            # Ciphers::ExtendedVigenereCipher.decrypt(text, key)
+            Ciphers::VigenereExtendedCipher.decrypt(text, key)
         when 'playfair'
             Ciphers::PlayfairCipher.decrypt(text, key)
         when 'affine'

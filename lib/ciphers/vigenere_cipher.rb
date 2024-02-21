@@ -8,21 +8,21 @@ module Ciphers
             ciphertext = ''
 
             plaintext.chars.each_with_index do |char, index|
-              shift = V_TABLE.index(key[index])
-              encrypted_char = V_TABLE[(V_TABLE.index(char) + shift) % 26]
-              ciphertext << encrypted_char
+                shift = V_TABLE.index(key[index])
+                encrypted_char = V_TABLE[(V_TABLE.index(char) + shift) % 26]
+                ciphertext << encrypted_char
             end
             ciphertext
         end
 
-        def self.decrypt(text, ciphertext)
-            key = transform_key(key, text.length)
+        def self.decrypt(ciphertext, key)
+            key = transform_key(key, ciphertext.length)
             plaintext = ''
 
             ciphertext.chars.each_with_index do |char, index|
-              shift = V_TABLE.index(key[index])
-              decrypted_char = V_TABLE[(V_TABLE.index(char) - shift) % 26]
-              plaintext << decrypted_char
+                shift = V_TABLE.index(key[index])
+                decrypted_char = V_TABLE[(V_TABLE.index(char) - shift) % 26]
+                plaintext << decrypted_char
             end
             plaintext
         end
