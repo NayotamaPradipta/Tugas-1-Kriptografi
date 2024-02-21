@@ -14,7 +14,7 @@ document.addEventListener('turbo:load', () => {
       const fileExt = fileName.split('.').pop().toLowerCase();
       const selectedCipher = cipherSelection.value;
       
-      if (selectedCipher !== 'vigenere3' && fileExt !== 'txt') {
+      if (!(selectedCipher === 'vigenere3' || selectedCipher === 'super') && fileExt !== 'txt') {
         alert('Only .txt files are allowed for this cipher.');
         fileInput.value = ''; // Reset the file input
       }
