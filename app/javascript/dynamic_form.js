@@ -29,24 +29,46 @@ document.addEventListener('turbo:load', () => {
     else if (dynamic_element.id === 'dynamic_key_container') {
       if (selection === 'affine') {
         dynamic_element.innerHTML = `
-        <div class="field-container" id="m_field_container">
-          <div class="label-container">
-            <label for="m">m value: </label>
+          <div class="field-container" id="m_field_container">
+            <div class="label-container">
+              <label for="m">m value: </label>
+            </div>
+            <div class="input-container">
+              <input type="number" id="m" name="m" class="key-text">
+            </div>
           </div>
-          <div class="input-container">
-            <input type="number" id="m" name="m" class="key-text">
+          <div class="field-container" id="b_field_container">
+            <div class="label-container">
+              <label for="b">b value: </label>
+            </div>
+            <div class="input-container">
+              <input type="number" id="b" name="b" class="key-text" min="0" max="25">
+            </div>
           </div>
-        </div>
-        <div class="field-container" id="b_field_container">
-          <div class="label-container">
-            <label for="b">b value: </label>
+      `;
+      } else if (selection === 'hill'){
+        dynamic_element.innerHTML = `
+          <div class="field-container" id="n_field_container">
+            <div class="label-container">
+              <label for="n">Matrix size(n): </label>
+            </div>
+            <div class="input-container">
+              <input type="number" id="n" name="n" class="key-text" min="0">
+            </div>
           </div>
-          <div class="input-container">
-            <input type="number" id="b" name="b" class="key-text" min="0" max="25">
+          <div class="field-container">
+            <div class="label-container">
+              <label for="key_input">Key: </label>
+            </div>
+            <div class="input-container">
+              <textarea name="key" id="key_input" class="key-text">${keyCache}</textarea>
+            </div>
           </div>
-        </div>
-      `
-      } else {
+        `;
+      } 
+      
+      
+      else {
         // Show key
         dynamic_element.innerHTML = `
         <div class="field-container">

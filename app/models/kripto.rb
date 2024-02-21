@@ -1,5 +1,5 @@
 class Kripto
-    def self.encrypt(text, cipher, key, m, b)
+    def self.encrypt(text, cipher, n, key, m, b)
         case cipher
         when 'vigenere1'
             Ciphers::VigenereCipher.encrypt(text, key)
@@ -12,15 +12,15 @@ class Kripto
         when 'affine'
             Ciphers::AffineCipher.encrypt(text, m, b)
         when 'hill'
-            Ciphers::HillCipher.encrypt(text, key)
-        when 'super'
+            Ciphers::HillCipher.encrypt(text, n, key)
+        when 'super' 
             # Ciphers::SuperCipher.encrypt(text, key)
         else
             "Unsupported Cipher"
         end
     end
 
-    def self.decrypt(text, cipher, key, m, b)
+    def self.decrypt(text, cipher, n, key, m, b)
         case cipher
         when 'vigenere1'
             Ciphers::VigenereCipher.decrypt(text, key)
@@ -33,8 +33,8 @@ class Kripto
         when 'affine'
             Ciphers::AffineCipher.decrypt(text, m, b)
         when 'hill'
-            Ciphers::HillCipher.decrypt(text, key)
-        when 'super'
+            Ciphers::HillCipher.decrypt(text, n, key)
+        when 'super' 
             # Ciphers::SuperCipher.decrypt(text, key)
         else
             "Unsupported Cipher"
