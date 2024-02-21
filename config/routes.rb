@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   post 'kripto/process_kripto', to: 'kripto#process_kripto', as: 'process_kripto'
   get 'kripto/process_kripto', to: 'kripto#index'
+  get 'download_result', to: 'kripto#download_result'
   # Defines the root path route ("/")
   # root "posts#index"
   root 'kripto#index'

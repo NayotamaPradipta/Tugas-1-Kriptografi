@@ -8,7 +8,7 @@ module Ciphers
             b = b.to_i
             cipher_text = ""
             if m.gcd(@n) != 1 
-                return "M must be coprime with 26"
+                return "ERROR: M must be coprime with 26"
             else 
                 text = clean_text(text)
                 text.each_char do |c|
@@ -27,7 +27,7 @@ module Ciphers
             b = b.to_i 
             plain_text = ""
             if m.gcd(@n) != 1
-                return "M must be coprime with 26"
+                return "ERROR: M must be coprime with 26"
             else 
                 m_inv = inverse_mod(m,@n)
                 text = clean_text(text)

@@ -30,7 +30,7 @@ module Ciphers
 
         def self.decrypt(text, key)
             if text.length % 2 != 0
-                return "Illegal text length (Odd)"
+                return "ERROR: Illegal text length (Odd)"
             end
             plain_text = ""
             # Matrix key 5x5

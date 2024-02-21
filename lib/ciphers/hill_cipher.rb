@@ -7,18 +7,22 @@ module Ciphers
             k_matrix = k_matrix(n, key)
             if is_invertible?(k_matrix)
                 t_matrix = transform_text(text, n)
-                cipher_text = ""
-                t_matrix.row_count.times do |row_index|
-                    column_vector = Matrix.column_vector(t_matrix.row(row_index).to_a)
-                    m_matrix = k_matrix * column_vector
-                    m_matrix = m_matrix.map {|e| e % 26}
-                    m_matrix.each do |element|
-                        cipher_text += (element + 'A'.ord).chr
-                    end
-                end 
-                cipher_text
+                if t_matrix != nil
+                    cipher_text = ""
+                    t_matrix.row_count.times do |row_index|
+                        column_vector = Matrix.column_vector(t_matrix.row(row_index).to_a)
+                        m_matrix = k_matrix * column_vector
+                        m_matrix = m_matrix.map {|e| e % 26}
+                        m_matrix.each do |element|
+                            cipher_text += (element + 'A'.ord).chr
+                        end
+                    end 
+                    cipher_text
+                else 
+                    "ERROR: Text is empty"
+                end
             else
-                "Matrix is not invertible (D = 0)"
+                "ERROR: Matrix is not invertible (D = 0)"
             end
         end
 
@@ -43,7 +47,7 @@ module Ciphers
                 end 
                 plain_text
             else 
-                "Matrix is not invertible (D = 0)"
+                "ERROR: Matrix is not invertible (D = 0)"
             end 
         end
 
@@ -69,12 +73,16 @@ module Ciphers
         end
 
         def self.transform_text(text, n)
-            text_chars = text.gsub(/[^a-zA-Z]/, '').upcase.chars.map{|c| c.ord - 'A'.ord }
-            padded_chunks = text_chars.each_slice(n).map do |slice|
-                slice.length == n ? slice : slice.fill(23, slice.length...n)
-            end 
-            matrix = Matrix.rows(padded_chunks)
-            matrix
+            if text.length > 0
+                text_chars = text.gsub(/[^a-zA-Z]/, '').upcase.chars.map{|c| c.ord - 'A'.ord }
+                padded_chunks = text_chars.each_slice(n).map do |slice|
+                    slice.length == n ? slice : slice.fill(23, slice.length...n)
+                end 
+                matrix = Matrix.rows(padded_chunks)
+                matrix
+            else 
+                nil 
+            end
         end
 
         def self.is_invertible?(matrix)
@@ -86,7 +94,7 @@ module Ciphers
         def self.mod_inverse(a, m)
             g, x, y = extended_gcd(a, m)
             if g != 1
-                "Modular inverse does not exist"
+                "ERROR: Modular inverse does not exist"
             else 
                 x % m 
             end 

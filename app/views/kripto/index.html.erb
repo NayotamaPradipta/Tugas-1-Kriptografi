@@ -67,6 +67,14 @@
                 <div class="output-container">
                     <%=text_area_tag :result, @result, class: 'result-text', readonly: true %>
                 </div>
+                
+            </div>
+            <div class="field-container">
+                <div class="label-container">
+                </div>
+                <div class="output-container">
+                    <%= link_to 'Download as file', download_result_path, class: 'download-button' %>
+                </div>
             </div>
             <% end %>
         <% end %>

@@ -62,6 +62,7 @@
 
 .buttons-container {
     justify-content: space-between;
+    margin-left: 13vw;
 }
 
 .spacer {
@@ -73,3 +74,29 @@ button {
     cursor: pointer;
 }
 
+.download-button {
+    /* Text styling */
+    color: #ffffff; /* White text color */
+    font-weight: bold; /* Make the text bold */
+  
+    /* Button styling */
+    background-color: #4CAF50; /* Green background */
+    padding: 12px 24px; /* Top and bottom padding, left and right padding */
+    border-radius: 25px; /* Rounded corners */
+    border: none; /* No border */
+    cursor: pointer; /* Change mouse cursor to signify clickable item */
+    text-decoration: none; /* Remove underline from link */
+    display: inline-block; /* Allows the use of padding and margins */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+  
+    /* Box shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Horizontal offset, vertical offset, blur radius, color */
+  }
+  
+  .download-button:hover, .download-button:focus {
+    /* Hover & focus styling for interactivity */
+    background-color: #45a049; /* Slightly darker shade of green */
+    color: #ffffff; /* Keep text color white */
+    text-decoration: none; /* Ensure no underline on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Slightly larger shadow for "lifting" effect */
+  }
