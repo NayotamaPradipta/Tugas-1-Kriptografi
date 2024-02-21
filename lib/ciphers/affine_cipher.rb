@@ -1,4 +1,3 @@
-require 'base64'
 module Ciphers 
     class AffineCipher
         @n=26
