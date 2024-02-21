@@ -4,9 +4,27 @@ document.addEventListener('turbo:load', () => {
   // Add textCache to save input text value after reload
   const textCache = document.getElementById('text_cache').value;
   const keyCache = document.getElementById('key_cache').value;
+
+  const validateFileExtension = () => {
+    const fileInput = document.getElementById('file_input');
+    const cipherSelection = document.getElementById('input_key_select');
+    
+    if (fileInput && cipherSelection && fileInput.files.length > 0) {
+      const fileName = fileInput.files[0].name;
+      const fileExt = fileName.split('.').pop().toLowerCase();
+      const selectedCipher = cipherSelection.value;
+      
+      if (selectedCipher !== 'vigenere3' && fileExt !== 'txt') {
+        alert('Only .txt files are allowed for this cipher.');
+        fileInput.value = ''; // Reset the file input
+      }
+    }
+  };
+  
   const updateDynamicField = (selection, dynamic_element) => {
     if (dynamic_element.id === 'dynamic_input_text_container'){
       if (selection === 'file') {
+        document.getElementById('input_type').value = 'file';
         dynamic_element.innerHTML = `
           <div class="label-container">
             <label for="file_input">Input File:</label>
@@ -16,6 +34,7 @@ document.addEventListener('turbo:load', () => {
           </div>
         `;
       } else {
+        document.getElementById('input_type').value = 'text';
         dynamic_element.innerHTML = `
           <div class="label-container">
             <label for="text_input">Input Text:</label>
@@ -83,7 +102,16 @@ document.addEventListener('turbo:load', () => {
      }
     }
   };
-
+  const cipherSelection = document.getElementById('input_key_select');
+  const fileInput = document.getElementById('file_input');
+  if (fileInput) {
+    fileInput.addEventListener('change', validateFileExtension);
+  }
+  
+  if (cipherSelection){
+    cipherSelection.addEventListener('change', validateFileExtension)
+  }
+  
   // Get dynamic containers
   const dynamicInputText = document.getElementById('dynamic_input_text_container');
   const dynamicKeyContainer = document.getElementById('dynamic_key_container'); 
@@ -95,9 +123,17 @@ document.addEventListener('turbo:load', () => {
   // Update dynamic field on selection change
   inputTypeSelect.addEventListener('change', () => {
     updateDynamicField(inputTypeSelect.value, dynamicInputText);
+  
+    const newFileInput = document.getElementById('file_input');
+    if (newFileInput){
+      newFileInput.addEventListener('change', validateFileExtension)
+    }
   });
 
   inputKeySelect.addEventListener('change', () => {
     updateDynamicField(inputKeySelect.value, dynamicKeyContainer);
   });
+
+  fileInput.addEventListener('change', validateFileExtension);
+
 });

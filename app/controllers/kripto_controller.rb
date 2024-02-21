@@ -1,10 +1,20 @@
 class KriptoController < ApplicationController
   def process_kripto 
     session.delete(:result) if session[:result].present?
+
+    input_text = case params[:input_type] 
+                  when 'text' 
+                    params[:text]
+                  when 'file' 
+                    params[:file].read if params[:file].present?
+                  end
+
+
+
     if params[:button_pressed] == 'encrypt'
-      @result = Kripto.encrypt(params[:text], params[:cipher], params[:n], params[:key], params[:m], params[:b])
+      @result = Kripto.encrypt(input_text, params[:cipher], params[:n], params[:key], params[:m], params[:b])
     elsif params[:button_pressed] == 'decrypt'
-      @result = Kripto.decrypt(params[:text], params[:cipher], params[:n], params[:key], params[:m], params[:b])
+      @result = Kripto.decrypt(input_text, params[:cipher], params[:n], params[:key], params[:m], params[:b])
     end 
     if @result.blank?
       redirect_to root_path
