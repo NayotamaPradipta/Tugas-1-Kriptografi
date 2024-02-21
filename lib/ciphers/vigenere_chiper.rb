@@ -3,7 +3,7 @@ module Ciphers
         A_TABLE = ('A'..'Z').to_a
 
         def self.encrypt(text, key)
-            plaintext = transform_plaintext(plaintext)
+            plaintext = transform_plain_text(text)
             key = transform_key(key, plaintext.length)
             ciphertext = ''
 

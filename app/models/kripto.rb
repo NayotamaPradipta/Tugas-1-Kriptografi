@@ -13,12 +13,12 @@ class Kripto
             Ciphers::AffineCipher.encrypt(text, m, b)
         when 'hill'
             Ciphers::HillCipher.encrypt(text, key)
-        when 'super' 
+        when 'super'
             # Ciphers::SuperCipher.encrypt(text, key)
-        else 
+        else
             "Unsupported Cipher"
-        end 
-    end 
+        end
+    end
 
     def self.decrypt(text, cipher, key, m, b)
         case cipher
@@ -34,10 +34,10 @@ class Kripto
             Ciphers::AffineCipher.decrypt(text, m, b)
         when 'hill'
             Ciphers::HillCipher.decrypt(text, key)
-        when 'super' 
+        when 'super'
             # Ciphers::SuperCipher.decrypt(text, key)
-        else 
+        else
             "Unsupported Cipher"
-        end  
-    end 
+        end
+    end
 end
