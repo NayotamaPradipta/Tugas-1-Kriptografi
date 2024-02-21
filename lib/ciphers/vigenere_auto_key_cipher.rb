@@ -1,10 +1,10 @@
 module Ciphers
-    class VigenereCipher
+    class VigenereAutoKeyCipher
         V_TABLE = ('A'..'Z').to_a
 
         def self.encrypt(text, key)
             plaintext = transform_plain_text(text)
-            key = transform_key(key, plaintext.length)
+            key = transform_key(key, plaintext)
             ciphertext = ''
 
             plaintext.chars.each_with_index do |char, index|
@@ -15,8 +15,7 @@ module Ciphers
             ciphertext
         end
 
-        def self.decrypt(text, ciphertext)
-            key = transform_key(key, text.length)
+        def self.decrypt(ciphertext, key)
             plaintext = ''
 
             ciphertext.chars.each_with_index do |char, index|
@@ -27,8 +26,12 @@ module Ciphers
             plaintext
         end
 
-        def self.transform_key(key, length)
-            key = key * (length / key.length) + key[0...(length % key.length)]
+        def self.transform_key(key, text)
+            if key.length < text.length
+                key += text[0, text.length - key.length]
+            else
+                key = key[0, text.length]
+            end
             key = key.upcase
             key
         end
