@@ -1,5 +1,4 @@
 require 'matrix'
-require 'base64'
 module Ciphers 
     class HillCipher
         def self.encrypt(text, n, key)

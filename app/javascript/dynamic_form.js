@@ -72,7 +72,7 @@ document.addEventListener('turbo:load', () => {
               <label for="n">Matrix size(n): </label>
             </div>
             <div class="input-container">
-              <input type="number" id="n" name="n" class="key-text" min="0">
+              <input type="number" id="n" name="n" class="key-text" min="2">
             </div>
           </div>
           <div class="field-container">

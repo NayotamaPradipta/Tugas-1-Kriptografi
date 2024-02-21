@@ -68,15 +68,27 @@
                 <div class="output-container">
                     <%=text_area_tag :result, @result, class: 'result-text', readonly: true %>
                 </div>
-                
+
             </div>
             <div class="field-container">
                 <div class="label-container">
                 </div>
                 <div class="output-container">
-                    <%= link_to 'Download as file', download_result_path, class: 'download-button' %>
+                    <%= link_to 'Download as file', download_result_path(format: 'file'), class: 'download-button' %>
+                </div>
+                <div class="output-container">
+                    <%= link_to 'Download as binary', download_result_path(format: 'binary'), class: 'download-button' %>
                 </div>
             </div>
+            <div class="field-container result-container">
+                <div class="label-container">
+                    <%= label_tag :result_base64, 'Result (Base64): ' %>
+                </div>
+                <div class="output-container">
+                    <%=text_area_tag :result_base64, @result_base64, class: 'result-text', readonly: true %>
+                </div>
+            </div>
+
             <% end %>
         <% end %>
     </div>

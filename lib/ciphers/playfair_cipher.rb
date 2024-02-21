@@ -1,5 +1,4 @@
 require 'matrix'
-require 'base64'
 module Ciphers 
     class PlayfairCipher
         def self.encrypt(text, key)
