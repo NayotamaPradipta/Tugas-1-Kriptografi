@@ -46,7 +46,7 @@ module Ciphers
                 end 
                 plain_text
             else 
-                "ERROR: Matrix is not invertible (D = 0)"
+                "ERROR: Illegal matrix detected"
             end 
         end
 
@@ -85,7 +85,8 @@ module Ciphers
         end
 
         def self.is_invertible?(matrix)
-            matrix.determinant != 0
+            det = matrix.determinant % 26
+            gcd(det, 26) == 1
         rescue Exception => e 
             false 
         end 
@@ -104,5 +105,9 @@ module Ciphers
             g, x, y = extended_gcd(b, a % b)
             [g, y, x-y*(a/b)]
         end 
+
+        def self.gcd(a,b)
+            b == 0 ? a : gcd(b, a%b)
+        end
     end 
 end 
