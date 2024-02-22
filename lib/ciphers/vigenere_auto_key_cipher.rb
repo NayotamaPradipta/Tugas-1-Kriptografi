@@ -17,11 +17,16 @@ module Ciphers
 
         def self.decrypt(ciphertext, key)
             plaintext = ''
-            key = transform_key(key, ciphertext)
+            d_key = key.dup
+
             ciphertext.chars.each_with_index do |char, index|
-              shift = V_TABLE.index(key[index])
-              decrypted_char = V_TABLE[(V_TABLE.index(char) - shift) % 26]
-              plaintext << decrypted_char
+                shift = V_TABLE.index(d_key[index])
+                d_index = V_TABLE.index(char) - shift
+                d_index += 26 if d_index < 0
+                d_char = V_TABLE[d_index % 26]
+                plaintext << d_char
+
+                d_key << d_char if index < ciphertext.length-1
             end
             plaintext
         end
