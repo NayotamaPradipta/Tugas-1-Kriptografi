@@ -14,7 +14,7 @@ class Kripto
         when 'hill'
             Ciphers::HillCipher.encrypt(text, n, key)
         when 'super'
-            # Ciphers::SuperCipher.encrypt(text, key)
+            Ciphers::SuperEncryptionCipher.encrypt(text, key)
         else
             "Unsupported Cipher"
         end
@@ -35,7 +35,7 @@ class Kripto
         when 'hill'
             Ciphers::HillCipher.decrypt(text, n, key)
         when 'super'
-            # Ciphers::SuperCipher.decrypt(text, key)
+            Ciphers::SuperEncryptionCipher.decrypt(text, key)
         else
             "Unsupported Cipher"
         end
