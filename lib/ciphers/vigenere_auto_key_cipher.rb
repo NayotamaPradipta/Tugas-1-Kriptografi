@@ -17,7 +17,7 @@ module Ciphers
 
         def self.decrypt(ciphertext, key)
             plaintext = ''
-
+            key = transform_key(key, ciphertext)
             ciphertext.chars.each_with_index do |char, index|
               shift = V_TABLE.index(key[index])
               decrypted_char = V_TABLE[(V_TABLE.index(char) - shift) % 26]
