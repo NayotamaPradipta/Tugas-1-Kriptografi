@@ -14,10 +14,18 @@ class KriptoController < ApplicationController
 
     if params[:button_pressed] == 'encrypt'
       @result = Kripto.encrypt(input_text, params[:cipher], params[:n], params[:key], params[:m], params[:b])
-      @result_base64 = Base64.encode64(@result)
+      if (params[:cipher] == 'super' || params[:cipher] == 'vigenere3')
+        @result_base64 = @result 
+      else 
+        @result_base64 = Base64.encode64(@result)
+      end
     elsif params[:button_pressed] == 'decrypt'
       @result = Kripto.decrypt(input_text, params[:cipher], params[:n], params[:key], params[:m], params[:b])
-      @result_base64 = Base64.encode64(@result)
+      if (params[:cipher] == 'super' || params[:cipher] == 'vigenere3')
+        @result_base64 = @result 
+      else 
+        @result_base64 = Base64.encode64(@result)
+      end
     end 
     if @result.blank?
       redirect_to root_path
