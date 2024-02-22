@@ -21,7 +21,9 @@ class KriptoController < ApplicationController
       end
       session[:cipher_type] = params[:cipher]
       session[:action] = 'encrypt'
-      session[:extension] = File.extname(params[:file].original_filename)
+      if params[:input_type] == 'file'
+        session[:extension] = File.extname(params[:file].original_filename)
+      end
     elsif params[:button_pressed] == 'decrypt'
       @result = Kripto.decrypt(input_text, params[:cipher], params[:n], params[:key], params[:m], params[:b])
       if (params[:cipher] == 'super' || params[:cipher] == 'vigenere3')
