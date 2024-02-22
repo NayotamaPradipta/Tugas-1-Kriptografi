@@ -5,22 +5,25 @@ module Ciphers
     def self.encrypt(plaintext, key)
       key = transform_key(key, plaintext.length)
       ciphertext_bytes = plaintext.bytes.each_with_index.map do |byte, index|
-        (byte + key.bytes[index] % 256) % 256
+        (byte + key.bytes[index] % 256)
       end
 
-      ciphertext = Base64.strict_encode64(ciphertext_bytes.pack('C*'))
-      transposed_ciphertext = transposition_encrypt(ciphertext, key.length)
-
-      transposed_ciphertext
+      ciphertext = ciphertext_bytes.pack('C*')
+      effective_key_length = [key.length, ciphertext.length].min
+      transposed_ciphertext = transposition_encrypt(ciphertext, effective_key_length)
+      Base64.strict_encode64(transposed_ciphertext)
     end
 
     def self.decrypt(ciphertext, key)
-      detransposed_ciphertext = transposition_decrypt(ciphertext, key.length)
+      detransposed_ciphertext_base64 = Base64.decode64(ciphertext)
+      effective_key_length = [key.length, detransposed_ciphertext_base64.length].min
+      detransposed_ciphertext = transposition_decrypt(detransposed_ciphertext_base64, effective_key_length)
 
-      decoded_bytes = Base64.decode64(detransposed_ciphertext).bytes
+      decoded_bytes = detransposed_ciphertext.bytes
       key = transform_key(key, decoded_bytes.length)
+
       plaintext_bytes = decoded_bytes.each_with_index.map do |byte, index|
-        (byte - key.bytes[index] % 256) % 256
+        (byte - key.bytes[index] % 256)
       end
       plaintext_bytes.pack('C*')
     end
@@ -43,10 +46,27 @@ module Ciphers
 
     def self.transposition_decrypt(text, key_length)
       column_size = (text.length.to_f / key_length).ceil
-      columns = text.chars.each_slice(column_size).to_a
+      total_chars = text.length
+      rows = []
+      start_index = 0
 
-      rows = columns.transpose.flatten.compact
-      rows.join
+      chars_in_last_column = total_chars % key_length
+      base_column_size = total_chars / key_length
+    
+      key_length.times do |column|
+        size = column < chars_in_last_column ? base_column_size + 1 : base_column_size
+        rows << text[start_index, size]
+        start_index += size
+      end
+
+      decrypted_text = ''
+      (0...column_size).each do |row_idx|
+        rows.each do |col|
+          decrypted_text << col[row_idx] if row_idx < col.length
+        end
+      end
+    
+      decrypted_text
     end
   end
 end
